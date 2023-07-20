@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
@@ -22,6 +22,7 @@
     <ProjectReference Include="..\Namotion.Messaging.Azure.ServiceBus\Namotion.Messaging.Azure.ServiceBus.csproj" />
     <ProjectReference Include="..\Namotion.Messaging.Azure.Storage.Queue\Namotion.Messaging.Azure.Storage.Queue.csproj" />
     <ProjectReference Include="..\Namotion.Messaging.Json\Namotion.Messaging.Json.csproj" />
+    <ProjectReference Include="..\Namotion.Messaging.MQTT\Namotion.Messaging.MQTT.csproj" />
     <ProjectReference Include="..\Namotion.Messaging.Storage\Namotion.Messaging.Storage.csproj" />
     <ProjectReference Include="..\Namotion.Messaging\Namotion.Messaging.csproj" />
   </ItemGroup>

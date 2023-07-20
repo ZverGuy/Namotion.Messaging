@@ -143,7 +143,7 @@ namespace Namotion.Messaging.Tests
 
         protected abstract IMessagePublisher<MyMessage> CreateMessagePublisher(IConfiguration configuration);
 
-        private static IConfigurationRoot GetConfiguration()
+        protected static IConfigurationRoot GetConfiguration()
         {
             return new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
