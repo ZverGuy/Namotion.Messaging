@@ -200,20 +200,21 @@ await receiver.ListenAndDeserializeJsonAsync(async (messages, ct) =>
 
 The following packages should only be used in the head project, i.e. directly in your application bootstrapping project where the dependency injection container is initialized.
 
-|                       | Azure<br /> Service Bus | Azure<br /> Event Hub     | Azure<br /> Storage Queue | RabbitMQ            | Amazon SQS           | InMemory            |
-|-----------------------|-------------------------|---------------------------|---------------------------|---------------------|----------------------|---------------------|
-| PublishAsync          | :heavy_check_mark:      | :heavy_check_mark:        | :heavy_check_mark:        | :heavy_check_mark:  | :heavy_check_mark:   | :heavy_check_mark:  |
-| ListenAsync           | :heavy_check_mark:      | :heavy_check_mark:        | :heavy_check_mark:        | :heavy_check_mark:  | :heavy_check_mark:   | :heavy_check_mark:  |
-| GetMessageCountAsync  | :x:                     | :x:                       | :heavy_check_mark:        | :heavy_check_mark:  | :heavy_check_mark:   | :heavy_check_mark:  |
-| KeepAliveAsync        | :heavy_check_mark:      | :heavy_minus_sign: (1.)   | :heavy_check_mark:        | :x:                 | :heavy_check_mark:   | :heavy_minus_sign:  |
-| ConfirmAsync          | :heavy_check_mark:      | :heavy_minus_sign: (1.)   | :heavy_check_mark:        | :heavy_check_mark:  | :heavy_check_mark:   | :heavy_minus_sign:  |
-| RejectAsync           | :heavy_check_mark:      | :heavy_minus_sign: (1.)   | :heavy_check_mark:        | :heavy_check_mark:  | :heavy_check_mark:   | :heavy_check_mark:  |
-| DeadLetterAsync       | :heavy_check_mark:      | :x: (2.)                  | :x: (2.)                  | :x: (2.)            | :x: (2.)             | :heavy_check_mark:  |
-| User properties       | :heavy_check_mark:      | :heavy_check_mark:        | :x: (3.)                  | :heavy_check_mark:  | :heavy_check_mark:   | :heavy_check_mark:  |
+|                      | Azure<br /> Service Bus | Azure<br /> Event Hub   | Azure<br /> Storage Queue | RabbitMQ           | Amazon SQS         | InMemory           | MQTT                  |
+|----------------------|-------------------------|-------------------------|---------------------------|--------------------|--------------------|--------------------|-----------------------|
+| PublishAsync         | :heavy_check_mark:      | :heavy_check_mark:      | :heavy_check_mark:        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:    |
+| ListenAsync          | :heavy_check_mark:      | :heavy_check_mark:      | :heavy_check_mark:        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:    |
+| GetMessageCountAsync | :x:                     | :x:                     | :heavy_check_mark:        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :X:                   |
+| KeepAliveAsync       | :heavy_check_mark:      | :heavy_minus_sign: (1.) | :heavy_check_mark:        | :x:                | :heavy_check_mark: | :heavy_minus_sign: | :X:                   |
+| ConfirmAsync         | :heavy_check_mark:      | :heavy_minus_sign: (1.) | :heavy_check_mark:        | :heavy_check_mark: | :heavy_check_mark: | :heavy_minus_sign: | :heavy_check_mark:    |
+| RejectAsync          | :heavy_check_mark:      | :heavy_minus_sign: (1.) | :heavy_check_mark:        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :X:                   |
+| DeadLetterAsync      | :heavy_check_mark:      | :x: (2.)                | :x: (2.)                  | :x: (2.)           | :x: (2.)           | :heavy_check_mark: | :X:                   |
+| User properties      | :heavy_check_mark:      | :heavy_check_mark:      | :x: (3.)                  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:(4) |
 
 1) Because Event Hub is stream based and not transactional, these method calls are just ignored.
 2) Use `receiver.WithDeadLettering(publisher)` to enable dead letter support.
 3) Use `receiver.WithPropertiesInContent()` to enable user properties support (not implemented yet).
+4) Set 'ProtocolVersion = MqttProtocolVersion.V500;` in `MQTTConfiguration` when create `MQTTPublisher`
 
 :heavy_minus_sign: = Noop/Ignored
 
@@ -308,5 +309,22 @@ Behavior:
 - The message's `Content` bytes are serialized to Base64 because SQS can only handle string content.
 
 Dependencies: 
+
+- [AWSSDK.SQS](https://www.nuget.org/packages/AWSSDK.SQS)
+
+### Namotion.Messaging.MQTT
+
+
+
+Implementations:
+
+- **MQTTMessagePublisher**
+- **MQTTMessageReceiver**
+
+Behavior:
+
+- When `handleMessages` throws an exception, then the messages are ignored.
+
+Dependencies:
 
 - [AWSSDK.SQS](https://www.nuget.org/packages/AWSSDK.SQS)

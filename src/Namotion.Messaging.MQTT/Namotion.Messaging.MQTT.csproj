@@ -5,6 +5,14 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>10</LangVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>0.9.1</Version>
+        <Title>Namotion.Messaging.MQTT</Title>
+        <Authors>ZverGuy</Authors>
+        <Description>MQTT protocol support for Namotion.Messaging</Description>
+        <PackageProjectUrl>https://github.com/RicoSuter/Namotion.Messaging</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/RicoSuter/Namotion.Messaging</RepositoryUrl>
+        <PackageReleaseNotes>Add MQTT Support</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

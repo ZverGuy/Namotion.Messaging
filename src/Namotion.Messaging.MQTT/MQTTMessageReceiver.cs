@@ -64,6 +64,10 @@ public class MQTTMessageReceiver : IMessageReceiver
                 {
                     await handleMessages(messages, cancellationToken).ConfigureAwait(false);
                 }
+                catch (TaskCanceledException)
+                {
+                    throw;
+                }
                 catch
                 {
                     await RejectAsync(messages, cancellationToken).ConfigureAwait(false);
